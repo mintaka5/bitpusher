@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.2">
+  <object class="tk.Toplevel" id="win">
+    <property name="geometry">640x480</property>
+    <property name="height">480</property>
+    <property name="title" translatable="yes">bitpushi</property>
+    <property name="width">640</property>
+    <containerlayout manager="pack">
+      <property name="propagate">False</property>
+    </containerlayout>
+    <child>
+      <object class="ttk.Frame" id="base">
+        <layout manager="pack">
+          <property name="expand">true</property>
+          <property name="fill">both</property>
+          <property name="side">top</property>
+        </layout>
+        <containerlayout manager="pack">
+          <property name="anchor">w</property>
+        </containerlayout>
+        <child>
+          <object class="ttk.Frame" id="cmd_frame">
+            <layout manager="pack">
+              <property name="anchor">sw</property>
+              <property name="expand">true</property>
+              <property name="fill">both</property>
+              <property name="side">top</property>
+            </layout>
+            <containerlayout manager="pack">
+              <property name="anchor">w</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="cmd_label">
+                <property name="anchor">n</property>
+                <property name="font">TkDefaultFont</property>
+                <property name="text" translatable="yes">commands</property>
+                <layout manager="pack">
+                  <property name="ipadx">5</property>
+                  <property name="pady">5</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Entry" id="cmd_entry">
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="ipadx">5</property>
+                  <property name="padx">5</property>
+                  <property name="pady">5</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="send_btn">
+                <property name="state">disabled</property>
+                <property name="text" translatable="yes">send</property>
+                <layout manager="pack">
+                  <property name="ipadx">5</property>
+                  <property name="padx">5</property>
+                  <property name="pady">5</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="response_frame">
+            <property name="height">250</property>
+            <layout manager="pack">
+              <property name="expand">true</property>
+              <property name="fill">both</property>
+              <property name="side">top</property>
+            </layout>
+            <containerlayout manager="pack">
+              <property name="propagate">False</property>
+            </containerlayout>
+            <child>
+              <object class="tk.Text" id="the_console">
+                <property name="background">#000000</property>
+                <property name="foreground">#00ff00</property>
+                <property name="highlightbackground">#00ff00</property>
+                <property name="highlightcolor">#000000</property>
+                <layout manager="pack">
+                  <property name="anchor">nw</property>
+                  <property name="fill">x</property>
+                  <property name="ipadx">5</property>
+                  <property name="ipady">5</property>
+                  <property name="padx">5</property>
+                  <property name="pady">5</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="db_frame">
+            <layout manager="pack">
+              <property name="expand">true</property>
+              <property name="fill">both</property>
+              <property name="side">top</property>
+            </layout>
+            <child>
+              <object class="ttk.Treeview" id="db_tree">
+                <property name="selectmode">extended</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="padx">5</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Scrollbar" id="db_tree_scroll">
+                <property name="orient">vertical</property>
+                <layout manager="pack">
+                  <property name="fill">y</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

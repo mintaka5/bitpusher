@@ -2,9 +2,6 @@ import hashlib
 import os
 import time
 from pathlib import Path
-
-import nltk
-from nltk.corpus import sentiwordnet
 from tinydb import TinyDB, Query
 from tinydb.operations import increment
 
@@ -36,11 +33,7 @@ def store(uin, db: TinyDB) -> str:
 def learning(record_hash, db):
     recs = db.all()
     txt = ' '.join("%s" % ''.join(map(str, x.get('message'))) for x in recs)
-
-    # get tags for POS
-    tokens = nltk.word_tokenize(txt)
-    pos_tags = nltk.pos_tag(tokens)
-    # [print(tag) for tag in pos_tags]
+    print(txt)
 
 
 def train(user_input, db: TinyDB):
@@ -54,15 +47,8 @@ def purge_all(db: TinyDB):
 
 def process_user_input(user_input: str, db: TinyDB):
     if len(user_input) > 0:
-        # train(user_input, db)
-        # response
-        tokens = nltk.word_tokenize(user_input)
-        tags = nltk.pos_tag(tokens)
-        # find entities
-        # entities = nltk.chunk.ne_chunk(tags)
-        [print(list(sentiwordnet.senti_synsets(tag[0], tag[1].lower()))) for tag in tags]
-        # print(tags)
-        # print(entities)
+        # store fingerprint and message
+        train(user_input, db)
 
 
 def list_records(db):
