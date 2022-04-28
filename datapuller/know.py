@@ -2,6 +2,8 @@ import hashlib
 import os
 import time
 from pathlib import Path
+
+import nltk
 from tinydb import TinyDB, Query
 from tinydb.operations import increment
 
@@ -31,9 +33,17 @@ def store(uin, db: TinyDB) -> str:
 
 
 def learning(record_hash, db):
-    recs = db.all()
-    txt = ' '.join("%s" % ''.join(map(str, x.get('message'))) for x in recs)
-    print(txt)
+    learned = db.get(Query().fingerprint == record_hash)
+    # query phrase for matching parts in other messages
+    learned_tokens = nltk.word_tokenize(learned.get('message'))
+    learned_tags = nltk.pos_tag(learned_tokens)
+    # go through each part of speech and store it!
+    for lt in learned_tags:
+        lt_hash = store(lt[0], db)
+        print(lt_hash)
+    # slam all the messages into one big text string
+    # txt = ' '.join("%s" % ''.join(map(str, x.get('message'))) for x in recs)
+    # print(txt)
 
 
 def train(user_input, db: TinyDB):
