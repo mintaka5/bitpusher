@@ -1,3 +1,3 @@
 # bitpusher
 
-store some info, make it unique forever!
+store some information. learn it. react to it.
