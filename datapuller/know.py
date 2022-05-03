@@ -38,8 +38,15 @@ def learning(record_hash, db):
     learned_tokens = nltk.word_tokenize(learned.get('message'))
     learned_tags = nltk.pos_tag(learned_tokens)
     # go through each part of speech and store it!
+    pos_list = list()
     for lt in learned_tags:
         lt_hash = store(lt[0], db)
+        '''
+        each POS will be stored, then seek
+        each token, and begin assigning
+        relationships based on hash list
+        '''
+        pos_list.append(lt_hash)
         print(lt_hash)
     # slam all the messages into one big text string
     # txt = ' '.join("%s" % ''.join(map(str, x.get('message'))) for x in recs)

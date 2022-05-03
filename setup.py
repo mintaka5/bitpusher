@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'bitpusher = datapuller.know:boot_up',
+            'bitpusher = datapuller.knowone:boot_up',
             'bitpushi = pushi.gui:boot_up'
         ]
     }
