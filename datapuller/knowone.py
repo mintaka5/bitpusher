@@ -4,10 +4,9 @@ import re
 import time
 from pathlib import Path
 
-import nltk
+from nltk import word_tokenize, pos_tag, ne_chunk
 from blitzdb import FileBackend, Document
 from blitzdb.document import DoesNotExist
-from nltk import PorterStemmer, WordNetLemmatizer
 from nltk.corpus import stopwords
 
 
@@ -44,22 +43,21 @@ def learning(fingerprint, db):
     try:
         message = db.get(Message, {'fingerprint': fingerprint})
         # normalize: remove all punctuation
-        the_message = re.sub("[^a-zA-Z0-9]", " ", message['message'].lower())
+        the_message = re.sub("[^a-zA-Z0-9]", " ", message['message'])
         # split up sentence and train word entities
-        tokens = nltk.word_tokenize(the_message)
-        print(tokens)
+        tokens = word_tokenize(the_message)
         # remove 'stop' words (all too commonly used words)
         tokens = [w for w in tokens if w not in stopwords.words("english")]
-        tokens_pos = nltk.pos_tag(tokens)
-        tokens_tagged = nltk.ne_chunk(tokens_pos)
-        print(tokens)
-        # stemming & lemming
-        # reduce words to stems
-        stemmed = [PorterStemmer().stem(w) for w in tokens]
-        print(stemmed)
-        lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in stemmed]
-        print(lemmed)
-
+        tokens_pos = pos_tag(tokens)
+        tokens_tagged = ne_chunk(tokens_pos)
+        related_hashes = message['correlations'];
+        for token in tokens:
+            # TODO : do this for phrases/sentences
+            record_hash = store(token, db)
+            related_hashes.append(record_hash)
+            message['correlations'] = related_hashes
+            message.save()
+        db.commit()
     except DoesNotExist:
         print("fingerprint %s does not exist" % fingerprint)
 
@@ -72,6 +70,9 @@ def train(user_input, db):
 def process_input(user_input, db):
     if len(user_input) > 0:
         train(user_input, db)
+    all_of_it = db.filter(Message, {})
+    for msg in all_of_it:
+        print(Message(msg).values())
 
 
 def boot_up():
