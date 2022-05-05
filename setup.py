@@ -14,7 +14,8 @@ setup(
     entry_points={
         'console_scripts': [
             'bitpusher = datapuller.knowone:boot_up',
-            'bitpushi = pushi.gui:boot_up'
+            'bitpushi = pushi.gui:boot_up',
+            'coda = codex.valuer:init'
         ]
     }
 )

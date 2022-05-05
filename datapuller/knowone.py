@@ -8,6 +8,8 @@ from nltk import word_tokenize, pos_tag, ne_chunk
 from blitzdb import FileBackend, Document
 from blitzdb.document import DoesNotExist
 from nltk.corpus import stopwords
+from nltk.sentiment import SentimentAnalyzer
+from nltk.sentiment.util import mark_negation
 
 
 class Message(Document):
@@ -69,10 +71,12 @@ def train(user_input, db):
 
 def process_input(user_input, db):
     if len(user_input) > 0:
-        train(user_input, db)
-    all_of_it = db.filter(Message, {})
-    for msg in all_of_it:
-        print(Message(msg).values())
+        # train(user_input, db)
+        print("user input: `%s`" % user_input)
+        uin_tokens = word_tokenize(user_input, preserve_line=True)
+        senti_analyzer = SentimentAnalyzer()
+        all_words_neg = senti_analyzer.all_words([mark_negation(doc) for doc in uin_tokens])
+        print(all_words_neg)
 
 
 def boot_up():
@@ -89,3 +93,8 @@ def boot_up():
         commands = ['bye', 'purge', 'list', 'ls', 'exit']
         if user_input not in commands:
             process_input(user_input.strip(), db)
+        else:
+            if user_input == "purge":
+                messages = db.filter(Message, {})
+                messages.delete()
+                db.commit()
