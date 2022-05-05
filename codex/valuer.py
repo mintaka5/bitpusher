@@ -1,16 +1,20 @@
 from enum import Enum
 
 
-class Nucleotides(Enum):
-    T = 'T'
-    C = 'C'
-    A = 'A'
-    G = 'G'
+class PBaseTypes(Enum):
+    A = 0
+    G = 1
 
-    @classmethod
-    def to_name(cls):
-        return cls()
+class PyBaseTypes(Enum):
+    C = 1
+    T = 0
+
+def generate_base_pair():
+    '''
+    generate a random base type
+    '''
+    pass
 
 
 def init():
-    print(Nucleotides.G.name)
+    generate_base_pair()
